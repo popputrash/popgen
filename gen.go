@@ -1,10 +1,9 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"math/rand"
-	"os"
-	"strconv"
 	"time"
 )
 
@@ -13,7 +12,6 @@ const charset = "abcdefghijklmnopqrstuvwxyz" +
 	"!@#$%^&*()-_=+,.?/:;{}[]`~"
 
 func genPass(num int) string {
-	rand.Seed(time.Now().UnixNano())
 	a := []rune(charset)
 	var n = num
 	var ret = ""
@@ -26,17 +24,12 @@ func genPass(num int) string {
 }
 
 func main() {
+	rand.Seed(time.Now().UnixNano())
+	var num, length int
+	flag.IntVar(&num, "n", 1, "specify amount of passwords to generate")
+	flag.IntVar(&length, "l", 15, "specify the length of generated passwords")
+	flag.Parse()
 
-	if len(os.Args) != 3 {
-		fmt.Println("Usage:", os.Args[0], "quantity", "length")
-		os.Exit(2)
-	}
-
-	num, err := strconv.Atoi(os.Args[1])
-	length, err := strconv.Atoi(os.Args[2])
-	if err != nil {
-		panic(err)
-	}
 	i := 0
 	for i != num {
 		fmt.Println(genPass(length))
