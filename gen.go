@@ -9,7 +9,8 @@ import (
 )
 
 const charset = "abcdefghijklmnopqrstuvwxyz" +
-	"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+	"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" +
+	"!@#$%^&*()-_=+,.?/:;{}[]`~"
 
 func genPass(num int) string {
 	rand.Seed(time.Now().UnixNano())
@@ -26,14 +27,19 @@ func genPass(num int) string {
 
 func main() {
 
-	args := os.Args
-
-	i, err := strconv.Atoi(args[1])
-	if err != nil {
-		fmt.Println(err)
+	if len(os.Args) != 3 {
+		fmt.Println("Usage:", os.Args[0], "quantity", "length")
 		os.Exit(2)
 	}
 
-	fmt.Println(genPass(i))
-
+	num, err := strconv.Atoi(os.Args[1])
+	length, err := strconv.Atoi(os.Args[2])
+	if err != nil {
+		panic(err)
+	}
+	i := 0
+	for i != num {
+		fmt.Println(genPass(length))
+		i++
+	}
 }
