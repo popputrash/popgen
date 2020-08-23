@@ -1,7 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"math/rand"
+	"os"
+	"strconv"
 	"time"
 )
 
@@ -22,5 +25,15 @@ func genPass(num int) string {
 }
 
 func main() {
+
+	args := os.Args
+
+	i, err := strconv.Atoi(args[1])
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(2)
+	}
+
+	fmt.Println(genPass(i))
 
 }
